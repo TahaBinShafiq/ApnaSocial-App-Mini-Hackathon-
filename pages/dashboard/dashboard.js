@@ -15,6 +15,34 @@ const signOut = () => {
   window.location.href = "../login.html";
 };
 
+const userDiv = document.getElementById("loginUserDetails");
+const currentUser = JSON.parse(localStorage.getItem("LoginUser"));
+if (currentUser) {
+  userDiv.innerHTML = `
+      <div class="flex items-start mb-4">
+        <div class="ml-3">
+          <p class="font-bold text-lg text-gray-800 dark:text-gray-100 transition-colors duration-300">${
+            currentUser.name
+          }</p>
+          <p class="text-sm text-gray-600 dark:text-gray-300 transition-colors duration-300">${
+            currentUser.email
+          }</p>
+        </div>
+      </div>
+      <p class="text-gray-700 dark:text-gray-300 transition-colors duration-300">
+        <span class="font-semibold text-[15px] text-gray-800 dark:text-gray-200 transition-colors duration-300">Date of Birth:</span> ${
+          currentUser.dateOfBirth || "N/A"
+        }
+      </p>
+      <p class="text-gray-700 dark:text-gray-300 transition-colors duration-300">
+        <span class="font-semibold text-gray-800 dark:text-gray-200 transition-colors duration-300">Gender:</span> ${
+          currentUser.gender || "N/A"
+        }
+      </p>
+    `;
+} else {
+  userDiv.innerHTML = `<p class="text-red-500 dark:text-red-400 transition-colors duration-300">User not logged in!</p>`;
+}
 function createPost() {
   const postText = document.getElementById("post-input").value.trim();
   const postImageFile = document.getElementById("post-url").files[0];
