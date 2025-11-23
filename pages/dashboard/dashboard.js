@@ -246,45 +246,48 @@ function saveEditedPost() {
 }
 
 function filterPosts(query) {
-  const user = JSON.parse(localStorage.getItem("LoginUser"));
+  const currentUser = JSON.parse(localStorage.getItem("LoginUser"));
   const feedContainer = document.getElementById("posts-feed-container");
   feedContainer.innerHTML = "";
 
-  if (!user.myPosts) return;
+  const allPosts = JSON.parse(localStorage.getItem("posts")) || [];
 
-  user.myPosts.forEach((post, index) => {
-    if (post.content.toLowerCase().includes(query.toLowerCase())) {
-      feedContainer.innerHTML += `
-        <div class="bg-gray-800 p-4 sm:p-6 rounded-xl shadow-2xl mb-6 border border-gray-700 hover:border-emerald-600/50">
-          <div class="flex items-center mb-4">
-            <img class="w-10 h-10 rounded-full object-cover bg-emerald-100"
-                 src="https://placehold.co/100x100/059669/ffffff?text=${post.owner.name.charAt(
-                   0
-                 )}" 
-                 alt="${post.owner.name}" />
-            <div class="ml-3">
-              <p class="font-semibold text-gray-100">${post.owner.name}</p>
-              <p class="text-xs text-gray-400">${post.time}</p>
-            </div>
-          </div>
-          <p class="text-gray-300 mb-4">${post.content}</p>
-          ${
-            post.postUrl
-              ? `<img class="w-full h-auto max-h-80 object-cover rounded-lg mb-4 border border-gray-700" src="${post.postUrl}" alt="Post image" />`
-              : ""
-          }
-          <div class="flex justify-around">
-            <button onclick="toggleLike(${index})" class="flex items-center text-emerald-400 hover:text-emerald-300 transition-all transform hover:-translate-y-0.5">❤️ ${
-        post.likes
-      }</button>
-            <button onclick="editPost(${index})" class="flex items-center text-blue-400 hover:text-blue-300 transition-all transform hover:-translate-y-0.5">✏ Edit</button>
-            <button onclick="deletePost(${index})" class="flex items-center text-red-500 hover:text-red-400 transition-all transform hover:-translate-y-0.5">🗑 Delete</button>
+  const filteredPosts = allPosts.filter(post => 
+    post.content.toLowerCase().includes(query.toLowerCase())
+  );
+
+  if (filteredPosts.length === 0) {
+    feedContainer.innerHTML = `<p class="text-gray-400 text-center">No posts found!</p>`;
+    return;
+  }
+
+  filteredPosts.forEach((post, index) => {
+    const isOwner = post.ownerName === currentUser.name; // check if login user owns this post
+
+    feedContainer.innerHTML += `
+      <div class="bg-gray-800 p-4 sm:p-6 rounded-xl shadow-2xl mb-6 border border-gray-700 hover:border-emerald-600/50">
+        <div class="flex items-center mb-4">
+          <div class="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold">${post.ownerName.charAt(0)}</div>
+          <div class="ml-3">
+            <p class="font-semibold text-gray-100">${post.ownerName}</p>
+            <p class="text-xs text-gray-400">${post.time}</p>
           </div>
         </div>
-      `;
-    }
+        <p class="text-gray-300 mb-4">${post.content}</p>
+        ${post.postUrl ? `<img class="w-full h-auto max-h-80 object-cover rounded-lg mb-4 border border-gray-700" src="${post.postUrl}" alt="Post image" />` : ""}
+        <div class="flex justify-around">
+          <button onclick="toggleLike(${index})" class="flex items-center text-emerald-400 hover:text-emerald-300 transition-all transform hover:-translate-y-0.5">❤️ ${post.likes}</button>
+          ${isOwner 
+            ? `<button onclick="openEditModal(${index})" class="flex items-center text-blue-400 hover:text-blue-300 transition-all transform hover:-translate-y-0.5">✏ Edit</button>
+               <button onclick="deletePost(${index})" class="flex items-center text-red-500 hover:text-red-400 transition-all transform hover:-translate-y-0.5">🗑 Delete</button>`
+            : ""
+          }
+        </div>
+      </div>
+    `;
   });
 }
+
 
 const searchInput = document.getElementById("search-posts");
 searchInput.addEventListener("input", (e) => {
