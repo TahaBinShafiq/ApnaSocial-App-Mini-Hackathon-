@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="min-h-screen flex items-center justify-center bg-black p-6">
+        <form id="signupForm" class="w-full max-w-md bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl
+               border border-white/20 animate-fadeIn space-y-6">
+            <h2 class="text-3xl font-semibold text-white mb-4 text-center">Sign In</h2>
+
+            <div class="relative">
+                <input id="loginEmail" type="email" required class="peer w-full p-3 bg-white/5 text-white rounded-lg border border-white/20 
+                    focus:ring-2 focus:ring-green-400 outline-none transition-all">
+                <label style="background-color: #262626;" class="absolute rounded-2xl px-4 left-3 top-3 text-gray-300 transition-all peer-focus:top-[-10px]
+                     peer-focus:text-sm peer-focus:text-green-300 peer-valid:top-[-10px] peer-valid:text-sm">
+                    Email
+                </label>
+            </div>
+
+
+            <div class="relative mb-0">
+                <input id="loginPass" type="password" required class="peer w-full p-3 bg-white/5 text-white rounded-lg border border-white/20 
+                    focus:ring-2 focus:ring-green-400 outline-none transition-all">
+                <label style="background-color: #262626;" class="absolute rounded-2xl px-4 left-3 top-3 text-gray-300 transition-all peer-focus:top-[-10px]
+                     peer-focus:text-sm peer-focus:text-green-300 peer-valid:top-[-10px] peer-valid:text-sm">
+                    Password
+                </label>
+                <span class="absolute right-3 top-2" id="toggle-eye" onclick="passwordTypeChnge()">
+                    <img class="h-[30px] w-[30px] " src="https://cdn-icons-png.flaticon.com/512/709/709612.png"
+                        alt="Show" id="eye-img">
+                </span>
+            </div>
+            <p class="text-red-600 mb-[0px]" style="display: none;" id="error"></p>
+
+            <button onclick="loginUser(event)" class="w-full bg-green-500 hover:bg-green-600 text-white p-3 rounded-lg
+                   shadow-lg active:scale-95 transition-all duration-200 cursor-pointer mt-[20px]">
+                Sign Up
+            </button>
+
+            <p class="text-gray-500 text-center">Don't have an account?<a href="/index.html" class='text-white'> <u>Sign
+                        Up Now</u></a></p>
+        </form>
+    </div>
+    <script src="/app.js"></script>
+    <script>
+        const checkLoginUser = () => {
+            let getLoginUser = JSON.parse(localStorage.getItem('LoginUser'))
+            if (getLoginUser) {
+                console.log('please login karen')
+                window.location.href = 'dashboard/dashboard.html'
+            }
+        }
+
+        checkLoginUser()
+
+    </script>
+</body>
+
+</html>

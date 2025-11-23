@@ -1,0 +1,31 @@
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.sticky-sidebar-height {
+  height: calc(100vh - 60px);
+}
+
+/* Sidebar toggle karne ke liye CSS trick */
+#sidebar-toggle:checked ~ .flex > #mobile-sidebar {
+  transform: translateX(0);
+}
+
+#sidebar-toggle:checked ~ .flex > #sidebar-overlay {
+  display: block;
+}
+
+/* Dropdown toggle karne ke liye CSS trick */
+#dropdown-toggle:checked + label + #user-dropdown-menu {
+  display: block;
+}
+
+/* Smooth Transition class for general elements */
+.transition-all-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.post-box {
+  color: white;
+  background-color: black;
+}

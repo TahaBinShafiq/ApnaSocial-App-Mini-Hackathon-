@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div  class="min-h-screen flex items-center justify-center bg-black p-6">
+        <form id="signupForm" class="w-full max-w-md bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl
+               border border-white/20 animate-fadeIn space-y-6">
+
+            <h2 class="text-3xl font-semibold text-white mb-4 text-center">Create Account</h2>
+
+            <!-- Name -->
+            <div class="relative">
+                <input id="userName" type="text" required class="peer w-full p-3 bg-white/5 text-white rounded-lg border border-white/20 
+                focus:ring-2 focus:ring-green-400 outline-none transition-all
+                peer-focus:border-transparent peer-valid:border-transparent">
+                <label style="background-color: #262626;" class="absolute rounded-2xl px-4 left-3 top-3 text-gray-300 transition-all
+                 peer-focus:top-[-10px] peer-focus:text-sm peer-focus:text-green-300
+                 peer-valid:top-[-10px] peer-valid:text-sm">
+                    Full Name
+                </label>
+            </div>
+
+            <!-- Email -->
+            <div class="relative">
+                <input id="userEmail" type="email" required class="peer w-full p-3 bg-white/5 text-white rounded-lg border border-white/20 
+                    focus:ring-2 focus:ring-green-400 outline-none transition-all">
+                <label style="background-color: #262626;" class="absolute rounded-2xl px-4 left-3 top-3 text-gray-300 transition-all peer-focus:top-[-10px]
+                     peer-focus:text-sm peer-focus:text-green-300 peer-valid:top-[-10px] peer-valid:text-sm">
+                    Email
+                </label>
+            </div>
+
+            <!-- Gender + DOB -->
+            <div class="flex gap-4">
+
+                <!-- Gender -->
+                <div class="relative w-full">
+                    <select required id="userGender" class="w-full p-3 bg-white/5 text-white rounded-lg border border-white/20 
+                       focus:ring-2 focus:ring-green-400 outline-none transition-all">
+                        <option value="Male" class="text-black">Male</option>
+                        <option value="Female" class="text-black">Female</option>
+                    </select>
+                    <span style="background-color: #262626;"
+                        class="absolute left-3 -top-3 text-sm text-green-300 rounded-2xl px-2">Gender</span>
+                </div>
+
+                <!-- DOB -->
+                <div class="relative w-full">
+                    <input id="userDateOfBirth" type="date" class="w-full p-3 bg-white/5 text-white rounded-lg border border-white/20 
+                      focus:ring-2 focus:ring-green-400 outline-none transition-all" required>
+                    <span style="background-color: #262626;"
+                        class="absolute left-3 -top-3 text-sm text-green-300  rounded-2xl px-2">Date of Birth</span>
+                </div>
+
+            </div>
+
+            <!-- Password -->
+            <div class="relative mb-0">
+                <input id="userPass" type="password" required class="peer w-full p-3 bg-white/5 text-white rounded-lg border border-white/20 
+                    focus:ring-2 focus:ring-green-400 outline-none transition-all">
+                <label style="background-color: #262626;" class="absolute rounded-2xl px-4 left-3 top-3 text-gray-300 transition-all peer-focus:top-[-10px]
+                     peer-focus:text-sm peer-focus:text-green-300 peer-valid:top-[-10px] peer-valid:text-sm">
+                    Password
+                </label>
+                <span class="absolute right-3 top-2" id="toggle-eye" onclick="passwordTypeChnge()">
+                    <img class="h-[30px] w-[30px] " src="https://cdn-icons-png.flaticon.com/512/709/709612.png"
+                        alt="Show" id="new-eye-img">
+                </span>
+            </div>
+            <p style="margin-bottom: 10px; color: red;" id="para"></p>
+
+            <!-- Button -->
+            <button onclick="signUpUser(event)" class="w-full bg-green-500 hover:bg-green-600 text-white p-3 rounded-lg
+                   shadow-lg active:scale-95 transition-all duration-200 cursor-pointer">
+                Sign Up
+            </button>
+
+            <p class="text-gray-500 text-center">Have an account? <a href="/pages/login.html" class='text-white'>
+                    <u>Sign In Now</u></a></p>
+
+        </form>
+        <script>
+            const checkLoginUser = () => {
+                let getLoginUser = JSON.parse(localStorage.getItem('LoginUser'))
+                if (getLoginUser) {
+                    console.log('please login karen')
+                    window.location.href = 'pages/dashboard/dashboard.html'
+                }
+            }
+            checkLoginUser()
+        </script>
+        <script src="app.js"></script>
+</body>
+
+</html>
